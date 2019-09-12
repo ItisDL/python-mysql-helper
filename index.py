@@ -84,3 +84,7 @@ def pm_db(sql='', act='select', dict=1, params=(), table='', data=(), where=''):
     finally:
         cur.close()  # 关闭游标
         db.close()  # 关闭连接
+
+if __name__ =='__main__':
+    sql = "select * from user_shop"
+    print(pm_db(sql))
