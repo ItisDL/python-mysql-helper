@@ -2,7 +2,6 @@
 # by dl
 import pymysql
 import sys
-import traceback
 from config import conf
 
 
@@ -65,15 +64,18 @@ class pythonMysqlHepler:
             return results
 
     def getAll(self, sql, params=()):
+        self.createCur(sys._getframe().f_code.co_name)
         self.executeSql(sql, params)
         results = self.cur.fetchall()
         return results
 
     def exec(self, sql, params=()):
+        self.createCur(sys._getframe().f_code.co_name)
         result = self.executeSql(sql, params)
         return result
 
     def insert(self, table, data):
+        self.createCur(sys._getframe().f_code.co_name)
         colStr = '(' + ','.join(data.keys()) + ')'
         vDataStr = ''
         for _ in data.keys():
@@ -87,6 +89,7 @@ class pythonMysqlHepler:
         return results
 
     def update(self, table, data, where):
+        self.createCur(sys._getframe().f_code.co_name)
         setStr = ''
         for _ in data:
             setStr += _ + ' = %s,'
