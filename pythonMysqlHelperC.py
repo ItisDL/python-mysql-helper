@@ -27,7 +27,6 @@ class pythonMysqlHepler:
                                    charset=self.charset
                                    )
 
-
     def createCur(self, funcName=''):
         if funcName in ['getOne', 'getCol']:
             self.cur = self.con.cursor()
