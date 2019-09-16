@@ -88,6 +88,26 @@ class pythonMysqlHepler:
         self.con.commit()
         return results
 
+    def insertM(self, table, data):
+        self.createCur(sys._getframe().f_code.co_name)
+        # 列
+        colStr = '(' + ','.join(data[0]) + ')'
+        # 值
+        vDataStr = ''
+        params = []
+        for _ in data[1:]:
+            vDataStr += '('
+            for __ in _:
+                vDataStr += '%s,'
+                params.append(__)
+            vDataStr = vDataStr[:-1] + '),'
+        vDataStr = vDataStr[:-1]
+
+        sql = 'insert into ' + table + colStr + ' values ' + vDataStr
+        results = self.cur.execute(sql, params)
+        self.con.commit()
+        return results
+
     def update(self, table, data, where):
         self.createCur(sys._getframe().f_code.co_name)
         setStr = ''
@@ -104,6 +124,8 @@ class pythonMysqlHepler:
 
 if __name__ == '__main__':
     # res = pythonMysqlHepler().insert(table='user_shop', data={'name': 'DLInsert'})
+    # print(res)
+    # res = pythonMysqlHepler().insertM(table='user_shop', data=[['name','account'], ['DL','123'], ['DL2','456']])
     # print(res)
     # 没有实例化直接用会报错 不想实例化可以直接在类名后面加一个()
     # res = pythonMysqlHepler().update(table='user_shop', data={'name': 'DLTest'}, where='id = 2')
