@@ -62,6 +62,15 @@ class pythonMysqlHepler:
             return [x[0] for x in results]
         else:
             return results
+        
+    def getCols(self, sql, params=()):
+        self.createCur(sys._getframe().f_code.co_name)
+        self.cur.execute(sql, params)
+        results = self.cur.fetchall()
+        if results:
+            return [list(x.values()) for x in results]
+        else:
+            return results
 
     def getAll(self, sql, params=()):
         self.createCur(sys._getframe().f_code.co_name)
